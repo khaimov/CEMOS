@@ -3,7 +3,7 @@ import { ArrowUpRight, Building2, Cpu, TrendingUp, AlertTriangle, DollarSign, Us
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useState, useEffect } from "react";
 import { Customer } from "./data";
-import { getTalentSuggestions, IntelligenceBrief } from "./talent-utils";
+import { IntelligenceBrief } from "./talent-utils";
 
 interface NewsData {
   headline: string;
@@ -387,7 +387,7 @@ export function CustomerCard({ customer }: { customer: Customer }) {
                                     {match.member.role.split(',')[0]}
                                   </span>
                                 </div>
-                                <p className="text-[10px] text-gray-400 leading-snug line-clamp-2 italic italic-purple-text">
+                                <p className="text-[10px] leading-snug line-clamp-2 italic-purple-text">
                                   "{match.reason}"
                                 </p>
                               </div>
