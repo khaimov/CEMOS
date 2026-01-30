@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is authenticated
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    // Helper to check if user is accessing their own document
+    // Assumes document ID is the user's UID or has a field 'userId' == uid
+    function isOwner(userId) {
+      return isAuth() && request.auth.uid == userId;
+    }
+    
+    // PUBLIC READ (Optional - currently restricted to Auth)
+    // If you want completely public read, change isAuth() to true
+    
+    // SKILLS: Public Read, Server Write
+    match /skills/{skillId} {
+      allow read: if true;
+      allow write: if false; // ONLY Server Actions (Admin SDK) can write
+    }
+
+    // TEAM MEMBERS: Public Read, Server Write
+    match /team_members/{memberId} {
+      allow read: if true;
+      allow write: if false; 
+    }
+
+    // CUSTOMERS: Public Read, Public Write (for prototyping/server actions)
+    match /customers/{customerId} {
+      allow read, write: if true;
+    }
+    
+    // PROFILES: Public Read, Server Write (for resume analysis)
+    match /profiles/{profileId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // INTELLIGENCE BRIEFS: Public Read, Server Write
+    match /intelligence_briefs/{briefId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    
+    // DEFAULT: Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
