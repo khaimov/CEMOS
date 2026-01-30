@@ -26,7 +26,8 @@ export function Sidebar() {
   const pathname = usePathname();
   const { logout, user } = useAuth();
 
-  if (!user && pathname !== "/login") return null; // Hide sidebar if not logged in (optional, or show minimal)
+  if (pathname === "/login") return null;
+  if (!user && pathname !== "/login") return null;
 
   return (
     <motion.aside

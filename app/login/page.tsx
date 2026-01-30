@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 export default function LoginPage() {
-  const { user, loading, signInWithGoogle } = useAuth();
+  const { user, loading, error, signInWithGoogle } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -18,31 +18,37 @@ export default function LoginPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-black">
         <Loader2 className="animate-spin text-cyan-400" size={48} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <GlassCard className="max-w-md w-full text-center space-y-8 p-12 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#050505]">
+      <GlassCard className="max-w-md w-full text-center space-y-8 p-12 relative overflow-hidden border border-white/5">
 
         {/* Decorative Background Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-cyan-500/20 rounded-full blur-[50px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <div>
-          <h1 className="text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 mb-2">
+        <div className="relative z-10">
+          <h1 className="text-5xl font-display font-bold text-white mb-2 tracking-tighter">
             CEMOS
           </h1>
-          <p className="text-gray-400">Restricted CE Operating System</p>
+          <p className="text-gray-500 text-sm font-medium uppercase tracking-[0.2em]">Restricted CE Operating System</p>
         </div>
+
+        {error && (
+          <div className="relative z-10 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
+            <p className="text-red-400 text-sm font-medium">{error}</p>
+          </div>
+        )}
 
         <button
           onClick={signInWithGoogle}
-          className="w-full py-4 px-6 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl font-bold flex items-center justify-center gap-3 transition-all group"
+          className="relative z-10 w-full py-4 px-6 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold flex items-center justify-center gap-3 transition-all group"
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
             <path
               fill="currentColor"
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
